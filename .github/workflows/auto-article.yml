@@ -1,0 +1,45 @@
+name: Auto Generate Blog Article
+
+on:
+  schedule:
+    # 毎週水曜と日曜の15:00 UTCに実行（日本時間0:00）
+    - cron: '0 15 * * 0,3'
+  workflow_dispatch:  # 手動実行も可能
+
+permissions:
+  contents: write
+
+jobs:
+  generate-article:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: pip install google-generativeai
+      
+      - name: Generate article
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          cd blog/scripts
+          python generate_article.py --auto
+      
+      - name: Commit and push
+        run: |
+          git config user.name "AbsCL Bot"
+          git config user.email "bot@abscl.dev"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "📝 Auto-generate blog article $(date +'%Y-%m-%d')"
+            git push
+          fi

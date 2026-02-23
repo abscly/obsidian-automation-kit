@@ -1,0 +1,18 @@
+{
+    "_comment": "Obsidian Automation Kit 設定ファイル",
+    "_doc": "config.template.json をコピーして config.json にリネーム後、各値を設定してください",
+    "discord_webhook_url": "",
+    "gemini_api_key": "",
+    "gemini_model": "gemini-2.0-flash",
+    "google_drive_path": "",
+    "notebooklm_notebook_id": "",
+    "git_remote": "",
+    "auto_weekly": true,
+    "auto_monthly": true,
+    "auto_git_backup": true,
+    "auto_discord_notify": false,
+    "auto_ai_reporter": false,
+    "auto_google_sync": false,
+    "auto_nlm_upload": false,
+    "uptimerobot_api_key": ""
+}

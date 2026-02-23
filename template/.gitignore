@@ -1,0 +1,13 @@
+# Obsidian Automation Kit
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.trash/
+scripts/__pycache__/
+scripts/.search_index/
+scripts/.google/
+scripts/config.json
+*.pyc
+.DS_Store
+Thumbs.db
+node_modules/
+exports/

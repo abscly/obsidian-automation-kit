@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AbsCL — AI × 自動化 × 個人開発</title>
+    <meta name="description" content="AI、Python自動化、Obsidian、個人開発のポートフォリオ・ブログ・ツール。">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AbsCL — AI × 自動化 × 個人開発">
+    <meta property="og:description" content="AI、Python自動化、Obsidian、個人開発のポートフォリオ・ブログ・ツール。">
+    <meta name="twitter:card" content="summary_large_image">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #08080d;
+            --card: #111119;
+            --text: #eeeef5;
+            --dim: #8888a0;
+            --muted: #555568;
+            --purple: #a78bfa;
+            --teal: #2dd4bf;
+            --pink: #f472b6;
+            --green: #10b981;
+            --gradient: linear-gradient(135deg, #a78bfa, #2dd4bf);
+            --border: rgba(255, 255, 255, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .ambient {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px)
+        }
+
+        .orb-a {
+            width: 500px;
+            height: 500px;
+            background: var(--purple);
+            opacity: 0.1;
+            top: -200px;
+            right: -150px;
+            animation: d 20s ease-in-out infinite
+        }
+
+        .orb-b {
+            width: 400px;
+            height: 400px;
+            background: var(--teal);
+            opacity: 0.07;
+            bottom: -150px;
+            left: -100px;
+            animation: d 15s ease-in-out infinite reverse
+        }
+
+        .orb-c {
+            width: 300px;
+            height: 300px;
+            background: var(--pink);
+            opacity: 0.05;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: d 25s ease-in-out infinite
+        }
+
+        @keyframes d {
+
+            0%,
+            100% {
+                transform: translate(0, 0)
+            }
+
+            50% {
+                transform: translate(40px, -30px)
+            }
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 60px 24px;
+            position: relative;
+            z-index: 1;
+            text-align: center
+        }
+
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 8px;
+            animation: fadeUp 0.6s
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 4px;
+            animation: fadeUp 0.6s 0.1s both
+        }
+
+        .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text
+        }
+
+        .tagline {
+            color: var(--dim);
+            font-size: 0.9rem;
+            margin-bottom: 40px;
+            animation: fadeUp 0.6s 0.2s both
+        }
+
+        .links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            animation: fadeUp 0.6s 0.3s both
+        }
+
+        .link {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px 16px;
+            text-decoration: none;
+            color: var(--text);
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px
+        }
+
+        .link:hover {
+            border-color: rgba(167, 139, 250, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3)
+        }
+
+        .link-icon {
+            font-size: 1.8rem
+        }
+
+        .link h3 {
+            font-size: 0.85rem;
+            font-weight: 700
+        }
+
+        .link p {
+            font-size: 0.65rem;
+            color: var(--dim);
+            line-height: 1.4
+        }
+
+        .social {
+            margin-top: 32px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            animation: fadeUp 0.6s 0.4s both
+        }
+
+        .social a {
+            color: var(--dim);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: 0.3s
+        }
+
+        .social a:hover {
+            color: var(--text)
+        }
+
+        .powered {
+            color: var(--muted);
+            font-size: 0.65rem;
+            margin-top: 24px;
+            animation: fadeUp 0.6s 0.5s both
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @media(max-width:480px) {
+            .links {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ambient">
+        <div class="orb orb-a"></div>
+        <div class="orb orb-b"></div>
+        <div class="orb orb-c"></div>
+    </div>
+    <div class="container">
+        <div class="logo">⚡</div>
+        <h1><span class="gradient-text">AbsCL</span></h1>
+        <p class="tagline">AI × 自動化 × 個人開発</p>
+
+        <div class="links">
+            <a href="landing-page/index.html" class="link">
+                <span class="link-icon">🚀</span>
+                <h3>OAK</h3>
+                <p>Obsidian Automation Kit</p>
+            </a>
+            <a href="blog/index.html" class="link">
+                <span class="link-icon">📝</span>
+                <h3>Blog</h3>
+                <p>技術ブログ</p>
+            </a>
+            <a href="tools/index.html" class="link">
+                <span class="link-icon">🧰</span>
+                <h3>Tools</h3>
+                <p>無料ツール集</p>
+            </a>
+            <a href="portfolio/index.html" class="link">
+                <span class="link-icon">💼</span>
+                <h3>Portfolio</h3>
+                <p>ポートフォリオ</p>
+            </a>
+        </div>
+
+        <div class="social">
+            <a href="https://twitter.com/" target="_blank">𝕏 Twitter</a>
+            <a href="https://github.com/" target="_blank">🐙 GitHub</a>
+            <a href="https://zenn.dev/" target="_blank">📘 Zenn</a>
+            <a href="https://buymeacoffee.com/" target="_blank">☕ BMC</a>
+        </div>
+
+        <p class="powered">© 2026 AbsCL — Powered by AI 🚀</p>
+    </div>
+</body>
+
+</html>

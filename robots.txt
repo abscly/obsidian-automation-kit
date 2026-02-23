@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Sitemap: https://abscl.github.io/obsidian-automation-kit/sitemap.xml
+
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1

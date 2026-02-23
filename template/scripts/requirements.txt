@@ -1,0 +1,24 @@
+# === Core (Required) ===
+# No external dependencies for basic operation!
+
+# === AI Reporter (Optional) ===
+google-generativeai>=0.8.0
+
+# === Discord Webhook (Optional) ===
+requests>=2.31.0
+
+# === Google Calendar/Tasks (Optional) ===
+google-auth-oauthlib>=1.2.0
+google-api-python-client>=2.100.0
+
+# === NotebookLM (Optional) ===
+# notebooklm-py  # Install separately if needed
+
+# === BigQuery (Optional) ===
+# google-cloud-bigquery>=3.0.0
+
+# === Cloud TTS (Optional) ===
+# google-cloud-texttospeech>=2.16.0
+
+# === Semantic Search (Optional) ===
+# Already covered by google-generativeai

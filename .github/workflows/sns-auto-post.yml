@@ -1,0 +1,76 @@
+name: X Daily Auto-Post + Analytics
+
+on:
+  schedule:
+    # 毎日 8:00 JST (23:00 UTC) に朝投稿
+    - cron: '0 23 * * *'
+    # 毎日 20:00 JST (11:00 UTC) に夜投稿
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install google-generativeai tweepy
+
+      - name: Post from queue
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+        run: |
+          python sns/x_auto_poster.py --post
+
+      - name: Update analytics dashboard
+        run: |
+          python sns/x_analytics.py --generate-dashboard
+
+      - name: Commit updates
+        run: |
+          git config user.name "OAK Bot"
+          git config user.email "bot@oak.dev"
+          git add -A
+          git diff --quiet --cached || git commit -m "🤖 Auto: daily post + analytics update"
+          git push
+
+  weekly-content:
+    runs-on: ubuntu-latest
+    if: github.event.schedule == '0 23 * * 0'  # 日曜のみ
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install google-generativeai
+
+      - name: Generate weekly content
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python sns/x_auto_poster.py --generate
+          python sns/x_thread_generator.py --type tips
+          python sns/x_analytics.py --generate-dashboard
+
+      - name: Commit content
+        run: |
+          git config user.name "OAK Bot"
+          git config user.email "bot@oak.dev"
+          git add -A
+          git diff --quiet --cached || git commit -m "🤖 Auto: weekly content generation"
+          git push
