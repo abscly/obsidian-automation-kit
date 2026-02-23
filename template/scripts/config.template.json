@@ -14,5 +14,26 @@
     "auto_ai_reporter": false,
     "auto_google_sync": false,
     "auto_nlm_upload": false,
-    "uptimerobot_api_key": ""
+    "uptimerobot_api_key": "",
+    "scheduler": {
+        "enabled": false,
+        "daily_note": {
+            "time": "00:05",
+            "enabled": true
+        },
+        "git_backup": {
+            "interval_minutes": 60,
+            "enabled": true
+        },
+        "weekly_review": {
+            "day_of_week": "Sunday",
+            "time": "23:30",
+            "enabled": true
+        },
+        "monthly_review": {
+            "day_of_month": 1,
+            "time": "23:45",
+            "enabled": true
+        }
+    }
 }

@@ -38,11 +38,26 @@ DEFAULT_CONFIG = {
         "repo": "obsidian-automation-kit",
         "pages_url": ""
     },
-    "schedule": {
-        "daily_note_time": "00:05",
-        "git_sync_interval": "1h",
-        "nlm_sync_interval": "1h",
-        "ai_report_interval": "3h"
+    "scheduler": {
+        "enabled": False,
+        "daily_note": {
+            "time": "00:05",
+            "enabled": True
+        },
+        "git_backup": {
+            "interval_minutes": 60,
+            "enabled": True
+        },
+        "weekly_review": {
+            "day_of_week": "Sunday",
+            "time": "23:30",
+            "enabled": True
+        },
+        "monthly_review": {
+            "day_of_month": 1,
+            "time": "23:45",
+            "enabled": True
+        }
     },
     "features": {
         "daily_note": True,
@@ -112,13 +127,13 @@ def interactive_setup():
     config = DEFAULT_CONFIG.copy()
 
     # Step 1: Vault
-    print("─── Step 1/5: Obsidian Vault ───")
+    print("─── Step 1/6: Obsidian Vault ───")
     vault = input("  Vault のパス (例: C:\\Users\\you\\Obsidian): ").strip()
     if vault:
         config["vault_path"] = vault
 
     # Step 2: Gemini API
-    print("\n─── Step 2/5: Gemini API ───")
+    print("\n─── Step 2/6: Gemini API ───")
     print("  取得先: https://aistudio.google.com/apikey")
     api_key = input("  Gemini API Key (skippable): ").strip()
     if api_key:
@@ -126,7 +141,7 @@ def interactive_setup():
         config["features"]["ai_reporter"] = True
 
     # Step 3: Discord
-    print("\n─── Step 3/5: Discord Webhook ───")
+    print("\n─── Step 3/6: Discord Webhook ───")
     print("  設定 → 連携サービス → ウェブフック → URL取得")
     webhook = input("  Discord Webhook URL (skippable): ").strip()
     if webhook:
@@ -134,7 +149,7 @@ def interactive_setup():
         config["features"]["discord_notify"] = True
 
     # Step 4: X (Twitter) API
-    print("\n─── Step 4/5: X (Twitter) API ───")
+    print("\n─── Step 4/6: X (Twitter) API ───")
     print("  https://developer.twitter.com/ で取得")
     x_key = input("  X API Key (skippable): ").strip()
     if x_key:
@@ -145,11 +160,28 @@ def interactive_setup():
         config["features"]["x_auto_post"] = True
 
     # Step 5: GitHub
-    print("\n─── Step 5/5: GitHub ───")
+    print("\n─── Step 5/6: GitHub ───")
     username = input("  GitHub Username (skippable): ").strip()
     if username:
         config["github"]["username"] = username
         config["github"]["pages_url"] = f"https://{username}.github.io/obsidian-automation-kit"
+
+    # Step 6: Scheduler
+    print("\n─── Step 6/6: 内蔵スケジューラー ───")
+    print("  OSのタスクスケジューラを使わず、Pythonを常駐させて自動実行しますか？")
+    use_scheduler = input("  スケジューラーを有効にする (y/N): ").strip().lower()
+    if use_scheduler == 'y':
+        config["scheduler"]["enabled"] = True
+        
+        # Git Backup Interval
+        interval = input("  Gitバックアップの間隔（分、デフォルト: 60）: ").strip()
+        if interval.isdigit():
+            config["scheduler"]["git_backup"]["interval_minutes"] = int(interval)
+            
+        # Daily Note Time
+        d_time = input("  Daily Noteの生成時刻（HH:MM、デフォルト: 00:05）: ").strip()
+        if d_time:
+            config["scheduler"]["daily_note"]["time"] = d_time
 
     # 保存
     CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
